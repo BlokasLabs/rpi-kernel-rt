@@ -1,12 +1,22 @@
 # rpi-kernel-rt
 Binary kernel builds based on -rt branches of https://github.com/raspberrypi/linux/
 
+Installing these builds can make your SD card non-bootable, so make sure to backup your current kernel build and any critical information on your SD card!
+
 # Downloading prebuilt archives
 
 Go to https://github.com/BlokasLabs/rpi-kernel-rt/releases, download one of the releases
 and extract it to /, for example:
 
-`tar -xvf ...`
+```shell
+# Back up current kernel first.
+sudo cp /boot/kernel.img /boot/kernel.img.bak
+sudo cp /boot/kernel7.img /boot/kernel7.img.bak
+
+# Download and extract RT kernel.
+wget https://github.com/BlokasLabs/rpi-kernel-rt/archive/v4.14.59-rt37.tar.gz
+sudo tar -xvf v4.14.59-rt37.tar.gz --strip 1 -C /
+```
 
 # Manual building
 
