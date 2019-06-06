@@ -14,7 +14,7 @@ sudo cp /boot/kernel.img /boot/kernel.img.bak
 sudo cp /boot/kernel7.img /boot/kernel7.img.bak
 
 # Download and extract RT kernel.
-wget https://github.com/BlokasLabs/rpi-kernel-rt/archive/v4.14.91-rt49.tar.gz -O kernel-rt.tar.gz
+curl -L -J https://github.com/BlokasLabs/rpi-kernel-rt/archive/v4.14.91-rt49.tar.gz -o kernel-rt.tar.gz
 sudo tar -xvf kernel-rt.tar.gz --strip 1 -C /
 ```
 
