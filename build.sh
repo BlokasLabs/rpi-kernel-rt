@@ -2,11 +2,8 @@
 
 mkdir -p build/boot/overlays
 
-git clone --depth 1 --branch blokas-rpi-5.15.y-rt https://github.com/BlokasLabs/rpi-linux-rt linux
+git clone --depth 1 --branch blokas-rpi-6.6.y-rt https://github.com/BlokasLabs/rpi-linux-rt linux
 cd linux
-export ARCH=arm
-export CROSS_COMPILE=arm-linux-gnueabihf-
-export INSTALL_MOD_PATH=../build
 
 # Arg1: kernel suffix, Arg2: config to use
 build_kernel() {
@@ -33,18 +30,29 @@ build_kernel() {
 	cp arch/${ARCH}/boot/dts/overlays/README ../build/boot/overlays/
 }
 
+# 32 bit ARM builds.
+export ARCH=arm
+export CROSS_COMPILE=arm-linux-gnueabihf-
+export INSTALL_MOD_PATH=../build
+
 # Build kernel for Pi 1, Pi 0, Pi 0 W and Compute Module
 build_kernel "" bcmrpi_defconfig zImage
 
 # Build kernel for Pi 2, Pi 3, Pi 3+ and Compute Module 3
 build_kernel "7" bcm2709_defconfig zImage
 
-# Build kerenl for Pi 4
+# Build kernel for Pi 4
 build_kernel "7l" bcm2711_defconfig zImage
 
+# 64 bit ARM builds
 export ARCH=arm64
 export CROSS_COMPILE=aarch64-linux-gnu-
+
+# Build kernel for Pi 4 (work on Pi 5 too)
 build_kernel "8" bcm2711_defconfig Image
+
+# Build kernel for Pi 5
+build_kernel "2712" bcm2712_defconfig Image
 
 # Run depmod for all kernels and unlink build and source
 find "../build/lib/modules" -mindepth 1 -maxdepth 1 -type d | while read DIR; do
